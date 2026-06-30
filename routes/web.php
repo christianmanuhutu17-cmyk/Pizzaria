@@ -2,6 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/run-seeder-rahasia', function () {
+    try {
+        Artisan::call('db:seed', ['--force' => true]);
+        return "Berhasil menjalankan seeder! Silakan kembali ke halaman utama.";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
 
 Route::get('/', function () {
     return redirect()->route('client.guest.catalog');
